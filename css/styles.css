@@ -1,0 +1,244 @@
+ @import url("bootstrap.min.css");
+ @import url("navbar.css");
+
+ body {
+ 	background-color:linear-gradient( rgb(255,255, 255),rgb(255,234,214)); 
+ }
+ #conteudo-exportar{
+ 	padding-left: 20px;
+ 	padding-right: 20px;
+ 	background-color: #CCC;
+ 	color: #000;
+ 	word-wrap: break-word;
+ }
+
+ #busca{
+ 	font-size: 18px;
+ 	font-family: verdana,arial;
+ }
+
+ #formulario .form-group label.error {
+ 	color: #FB3A3A;
+ 	display: inline-block;
+ 	padding: 0;
+ 	text-align: left;
+ 	width: 850px;
+ }
+
+ /* HOME */
+ .barra-a{
+ 	position: relative;
+ 	background-color: #FFF;
+ 	height: 40px;
+ 	width: 100%;
+ 	display: flex;
+ 	justify-content: flex-end;
+ 	padding-top: 5px;
+ 	padding-bottom: 5px;
+ }
+
+ .barra-a .btn-default {
+ 	color: #000;
+ 	background-color: rgb(255,150,20);
+ }
+
+ .header{
+ 	
+ 	background-color: transparent;
+ 	padding: 15px 0px 15px 0px;
+ 	display: flex;
+ 	justify-content: center;
+ 	text-align: center;
+ }
+
+ .info-header{
+ 	padding: 0;
+ 	margin: 0 auto;
+ }
+
+ .search{
+ 	background-color: #000;
+ 	width: 100%;
+ 	background-color: rgb(149,26,28);
+ 	padding: 15px;
+ 	align-items: center;
+ 	display: flex;  
+ 	justify-content: center;
+ }
+
+ .login-inicio{
+ 	width: 100%;
+ 	text-align: right;
+ 	color: #000;
+ }
+
+ .login-inicio a{
+ 	color: #0000BB;
+ }
+
+ .menu{
+ 	padding: 0;
+ 	margin: 0 auto;
+ 	background-color: rgb(144,26,28);
+ 	border-bottom-width: 2px;
+ 	border-bottom-color: rgb(255,150,20);
+ }
+
+ .carrosel{
+ 	padding: 15px 0px 0px 0px;
+ 	margin: 0 auto;
+ }
+
+ .legenda-carrosel {
+ 	background-color: rgba(0,0,0,0.6);
+ }
+
+ .conteudo-relacionado{
+ 	background-image: linear-gradient( to right, #DDD, #FFF );
+ 	margin-top: 15px;
+ 	color: #333;
+
+ }
+
+ .receitas-mais{
+ 	margin-top: 15px;
+ 	padding: 15px;
+ 	background-color: rgb(255, 245, 230);
+ 	color: #000;
+ }
+
+ .receitas-mais h1{
+ 	color:rgb(149,26,28);
+ 	padding-bottom: 10px;
+ }
+
+ .receitas-mais-votadas a{
+ 	color:#000;
+ }
+
+ .receitas-mais-votadas .btn-default{
+ 	color:#000;
+ }
+
+ .rodape{
+ 	margin-top: 10px;
+ 	background-color: #DDD;
+ 	padding-top: 20px;
+ 	padding-bottom: 20px;
+ }
+
+ .rodape a{
+ 	color:#000;
+ }
+
+ .rodape-autores{
+ 	background-color: #EEE;
+ 	padding-top: 10px;
+ 	color: #000;
+ }
+ /* FIM HOME */
+
+ /* CADASTRAR RECEITA */
+ .titulo-conteudo-back{
+ 	background-color: rgb(255, 245, 230);
+ }
+
+ .titulo-conteudo{
+ 	padding: 15px;
+ 	color: rgb(144,26,28);
+ }
+
+ .conteudo-conteudo{
+ 	padding: 15px;
+ 	color: #000;
+ }
+
+ /*EXIBIR RECEITA */
+ .conteudo-categorias{
+ 	padding-top: 15px;
+ 	padding-bottom: 15px;
+ }
+
+ .conteudo-categorias a{
+ 	color: #000;
+ }
+
+ /* RECEITA */
+ .resposta-ajax{
+ 	color: green;
+ }
+
+ .conteudo-coment{
+ 	color: #000;
+ 	background-color: #DDD;
+ 	padding: 10px;
+ }
+
+ .ingredientes-modopreparo{
+ 	color: #000;
+ }
+
+ .receita-avaliacao-comentario{
+ 	color: #000;
+ }
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) { /* TABLET */
+	
+	.header{
+		display: flex;
+		justify-content: flex-start;
+		padding: 15px 0px 15px 0px;
+
+	}
+	.search{
+		padding: 0;
+		height: 100px;
+		width: 100%;
+		background-color: transparent;
+
+		align-items: center;
+		display: flex;  
+		justify-content: flex-end;
+	}
+
+}
+
+@media (min-width: 992px) { /* COMPUTADOR */
+
+
+}
+
+@media print {
+	.noprint { display: none; }
+
+	.header{
+		display: flex;
+		justify-content: flex-start;
+		padding: 15px 0px 15px 0px;
+
+	}
+
+	.titulo-conteudo{
+		padding: 0px;
+		color: rgb(144,26,28);
+	}
+
+	.conteudo-categorias{
+		padding-left: 30px;
+		padding-bottom: 10px;
+	}
+
+	.carrosel{
+		max-width: 400px;
+
+	}
+	.conteudo-categorias{
+		padding: 0;
+		margin: 0 auto;
+	}
+
+}
+

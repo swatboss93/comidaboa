@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Comida Boa</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/all.min.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/navbar.css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/shieldui-all.min.js"></script>
+
+  <script type="text/javascript">
+
+    var cadastro = getUrlVars()["cadastroUsuario"];
+    if(cadastro.localeCompare("true") == 0)
+      alert("Cadastro efetuado com sucesso!");
+    else if(cadastro.localeCompare("false") == 0)
+      alert("Desculpe-nos, ocorreu um erro ao cadastrar, por favor tente novamente!");
+
+  </script>
+
+</head>
+<body>
+
+  <header class="row"> <!-- primeira row -->
+    <div class="container">
+      <div class="col-xs-12 col-sm-7 col-md-8 header">
+        <img src="images/logo.png" class="img-responsive" alt="Logo Comida Boa">
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-4 info-header">
+        <div class="barra-a">
+          <button type="submit" class="btn btn-default" onclick="aumentaLetra()">A+</button>
+          <button type="submit" class="btn btn-default" onclick="diminuiLetra()">A-</button>
+          <button type="submit" class="btn btn-default" onclick="contraste()" >Contraste</button>
+        </div>
+        <div id="infoUsuario" class="login-inicio">
+          <h4>Olá, faça o <a href="login.html">login</a> ou <a href="cadastrar-usuario.html">cadastre-se</a></h4>
+        </div>
+        <script type="text/javascript">
+          if($.cookie("infoUsuario").localeCompare("false") != 0)
+          {
+            var strJson = $.cookie("infoUsuario");
+            var objJ = JSON.parse(strJson);
+            $('#infoUsuario').html("<h4>Olá, "+objJ.nome+" <button class='btn btn-danger btn-sm' type='button' onclick='sair()'>Sair</button></h4>");
+          }
+        </script>
+        <div class="search"> <!-- inicio busca-->
+          <form class="form-inline">
+            <input type="text" class="form-control" id="busca" placeholder="Buscar receita...">
+          </form>
+        </div><!-- fim busca -->
+      </div> 
+    </div>
+  </header> <!-- fim primeira row -->
+
+  <div class="row">
+    <div class="container-fluid menu">
+      <div class="navbar-wrapper"> <!-- inicio menu -->
+        <div class="container">
+          <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+                  <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+                  <li><a href="categoria.html?categoria=aves">Aves</a></li>
+                  <li><a href="categoria.html?categoria=massas">Massas</a></li>
+                  <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+                  <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+                  <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+                  <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav> 
+        </div>
+      </div><!--fim menu-->
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="container">
+      <div class="col-xs-12 col-sm-8 col-md-8 carrosel"> <!-- Carrosel -->
+        <section id="sliderhome">
+          <div id="meuSlider" class="carousel slide" data-ride="carousel">
+            <div id="carrosel-recentes" class="carousel-inner">
+
+            </div>
+            <a class="left carousel-control" href="#meuSlider" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+            <a class="right carousel-control" href="#meuSlider" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+
+          </div>
+        </section>
+      </div> <!-- fim Carrosel -->
+
+      <script type="text/javascript">
+        var controle=0;
+        $.getJSON("indexx.php?tipo=recentes", function(result){
+         $.each(result, function(name, valor){
+          controle++;
+          
+          var res_cat = valor.categorias.split("&");
+          var res_cats = "";
+          for( i=0; i < res_cat.length-1 ;i++)
+          {
+            if(i==0)
+              res_cats =res_cats+res_cat[i];
+            else
+              res_cats =res_cats+', '+res_cat[i];
+          }
+
+          if(controle == 1){
+           $('#carrosel-recentes').append('<div class="item active"><img src="images/'+valor.imagem+'" alt="'+valor.nome+'" /><a href="receita.html?id='+valor.id_receita+'"><div class="carousel-caption legenda-carrosel"><h1>'+valor.nome+'</h1><h4>'+res_cats+'</h4><p>Nota '+valor.avaliacao.substring(0, 3)+' de 5</p></div></a></div>');
+         }else
+         {
+          $('#carrosel-recentes').append('<div class="item"><img src="images/'+valor.imagem+'" alt="'+valor.nome+'" /><a href="receita.html?id='+valor.id_receita+'"><div class="carousel-caption legenda-carrosel"><h1>'+valor.nome+'</h1><h4>'+res_cats+'</h4><p>Nota '+valor.avaliacao.substring(0, 3)+' de 5</p></div></a></div>');
+        }
+      });
+       });
+     </script>
+
+     <aside class="col-xs-12 col-sm-4 col-md-4 conteudo-relacionado"> <!-- inicio conteudo relacionado -->
+      <h1>Programas de TV</h1>
+      <h2>Master Chef</h2>
+      <p>Emissora: Band</p>
+      <p>Dia: Terça-feira - Horário: 22h30</p>
+      <h4><a href="http://entretenimento.band.uol.com.br/masterchef/2016/">Site</a></h4>
+
+      <h2>Mais Você</h2>
+      <p>Emissora: Globo</p>
+      <p>Dia: Segunda-feira a Sexta-feira - Horário: 9h00</p>
+      <h4><a href="http://gshow.globo.com/programas/mais-voce/">Site</a></h4>
+
+    </aside>
+
+  </div>
+</div>
+<section class="container-fluid receitas-mais">
+  <div class="container"> <!--inicio container receitas mais votadas-->
+    <div class="row">
+    <header class="col-md-12" >
+       <h1>Receitas mais bem votadas</h1>
+     </header>
+     
+     <!-- INICIO MAIS VOTADAS EDITAVEL -->
+     <article id="receitas-mais-votadas" class="receitas-mais-votadas">
+
+     </article>
+
+   </div><!-- /.row -->
+ </div><!--fim container receitas mais votadas-->
+
+
+ <script type="text/javascript">
+
+  $.getJSON("indexx.php?tipo=votadas", function(result){
+   $.each(result, function(name, valor){
+
+     var res_cat = valor.categorias.split("&");
+     var res_cats = "";
+     for( i=0; i < res_cat.length-1 ;i++)
+     {
+      if(i==0)
+        res_cats =res_cats+res_cat[i];
+      else
+        res_cats =res_cats+', '+res_cat[i];
+    }
+
+    $('#receitas-mais-votadas').append('<a href="receita.html?id='+valor.id_receita+'"><div class="col-md-3 col-sm-6" ><img class="img-circle center-block" src="images/'+valor.imagem+'" alt="'+valor.nome+'" width="200" height="200"><h2>'+valor.nome+'</h2><h4>'+res_cats+'</h4><h5>Nota '+valor.avaliacao.substring(0, 3)+' de 5</h5><p><a class="btn btn-default " href="receita.html?id='+valor.id_receita+'" role="button">Visualizar</a></p></div></a>');
+  });
+ });
+
+</script>
+</section>
+
+<footer>
+  <div class="container-fluid rodape"> <!-- inicio rodape -->
+    <div class="container">
+      <div class="col-md-2 col-sm-3 col-xs-6">
+        <img src="images/logo.png" class="img-responsive" alt="Responsive image">
+      </div>
+      <div class="col-md-10 col-sm-9 col-xs-12">
+        <ul class="list-inline">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+          <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+          <li><a href="categoria.html?categoria=aves">Aves</a></li>
+          <li><a href="categoria.html?categoria=massas">Massas</a></li>
+          <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+          <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+          <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+          <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid rodape-autores"> <!-- inicio rodape -->
+    <div class="container">
+      <div class="col-md-12 rodape-autores">
+        <dl>
+          <dt>Institudo de Ciências Matemáticas e de Computação - Universidade de São Paulo</dt>
+          <dd>Disciplina de Sistemas Web e Hipermídia</dd>
+          <dd>Professora Renata Pontin de Mattos Fortes</dd>
+          <dd>Alunos: Eduardo Pereira Fressato NUSP: 9744010 e Wallison de Oliveira NUSP: 9745115</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

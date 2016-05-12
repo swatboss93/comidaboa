@@ -1,0 +1,291 @@
+ @import url("bootstrap.min.css");
+ @import url("navbar.css");
+
+ body {
+ 	background-color: rgb(70,15, 15); 
+ }
+
+ #conteudo-exportar{
+ 	padding-left: 20px;
+ 	padding-right: 20px;
+ 	background-color: #000;
+ 	color: #FFF;
+ }
+
+ #formulario .form-group label.error {
+ 	color: #FFF;
+ 	display: inline-block;
+ 	padding: 0;
+ 	text-align: left;
+ 	width: 850px;
+ 	
+ }
+
+ /* HOME */
+ .barra-a{
+ 	position: relative;
+ 	background-color: rgb(70,15, 15);
+ 	height: 40px;
+ 	width: 100%;
+ 	display: flex;
+ 	justify-content: flex-end;
+ 	padding-top: 5px;
+ 	padding-bottom: 5px;
+ }
+
+ .barra-a .btn-default {
+ 	color: #FFF;
+ 	background-color: #000;
+ }
+
+ .header{
+ 	
+ 	background-color: transparent;
+ 	padding: 15px 0px 15px 0px;
+ 	display: flex;
+ 	justify-content: center;
+ 	text-align: center;
+ }
+
+ .info-header{
+ 	padding: 0;
+ 	margin: 0 auto;
+ }
+
+ .search{
+ 	background-color: #000;
+ 	width: 100%;
+ 	background-color: rgb(70,15, 15);
+ 	padding: 15px;
+ 	align-items: center;
+ 	display: flex;  
+ 	justify-content: center;
+ }
+
+ .login-inicio{
+ 	width: 100%;
+ 	text-align: right;
+ 	color: #FFF;
+ }
+
+ .login-inicio a{
+ 	color: #BBB;
+ }
+
+ .menu{
+ 	padding: 0;
+ 	margin: 0 auto;
+ 	background-color: #000;
+ 	border-bottom-width: 2px;
+ 	border-bottom-color: #FFF;
+ }
+
+ .carrosel{
+ 	padding: 15px 0px 0px 0px;
+ 	margin: 0 auto;
+ }
+
+ .legenda-carrosel {
+ 	background-color: #000;
+ }
+
+ .conteudo-relacionado{
+ 	color: #FFF;
+ 	background-color: transparent;
+ 	background-image: none;
+ 	margin-top: 15px;
+
+ }
+
+ #anterior{
+ 	color:#000;
+ }
+ #proximo{
+ 	color:#000;
+ }
+
+ .receitas-mais{
+ 	margin-top: 15px;
+ 	padding: 15px;
+ 	background-color: rgb(101,18, 20);
+ 	color: #FFF;
+ }
+
+ .receitas-mais h1{
+ 	color: #FFF;
+ 	padding-bottom: 10px;
+
+ }
+
+ .receitas-mais-votadas a{
+ 	color:#FFF;
+ }
+
+ .receitas-mais-votadas .btn-default{
+ 	color:#000;
+ }
+
+ .rodape{
+ 	background-color: rgb(70,15, 15);
+ 	padding-top: 20px;
+ 	padding-bottom: 20px;
+ }
+
+ .rodape a{
+ 	color:#FFF;
+ }
+
+ .rodape .btn-default{
+ 	color:#000;
+ }
+
+ .rodape-autores{
+ 	background-color: rgb(101,18, 20);
+ 	padding-top: 10px;
+ 	color: #FFF;
+ }
+ /* FIM HOME */
+
+ /* CADASTRAR RECEITA */
+ .titulo-conteudo-back{
+ 	background-color: rgb(25, 25, 25);
+ }
+
+ .titulo-conteudo{
+ 	padding: 15px;
+ 	color: #FFF;
+ }
+
+ .conteudo-conteudo{
+ 	padding: 15px;
+ 	color: #FFF;
+ }
+
+ /*EXIBIR RECEITA */
+ .conteudo-categorias{
+ 	padding-top: 15px;
+ 	padding-bottom: 15px;
+ }
+
+ .conteudo-categorias a{
+ 	color: #FFF;
+ }
+
+ .conteudo-categorias .btn-default{
+ 	color:#000;
+ }
+
+ /* RECEITA */
+ .resposta-ajax{
+ 	color: #FFF;
+ }
+
+ .conteudo-coment{
+ 	color: #FFF;
+ 	background-color: #000;
+ 	padding: 10px;
+ }
+
+ .ingredientes-modopreparo{
+ 	color: #FFF;
+ }
+
+ .receita-avaliacao-comentario{
+ 	color: #FFF;
+ }
+/*
+* navbar
+*/
+.navbar {
+	background-color: #000;
+	border-color: transparent;
+	width: 100%;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.navbar .btn-default{
+	color:#000;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 8px;
+	background-color: #000;
+	color: #000;
+	border-color: #FFF;
+	border-width: 2px;
+}
+
+/* link cor da letra*/ 
+.navbar .navbar-nav > li > a {
+	color: #FFF;
+	font-size: 16px;
+}
+
+/* passar mouse */
+.navbar .navbar-nav > li > a:hover,
+.navbar .navbar-nav > li > a:focus {
+	color: #FFF;
+	background-color: #666;
+
+}
+
+/* item selecionado */
+.navbar .navbar-nav > .active > a, 
+.navbar .navbar-nav > .active > a:hover, 
+.navbar .navbar-nav > .active > a:focus {
+	color: #FFF;
+	background-color: #444;
+}
+.navbar .navbar-nav > .open > a, 
+.navbar .navbar-nav > .open > a:hover, 
+.navbar .navbar-nav > .open > a:focus {
+	color: #FFF;
+	background-color: #FFF;
+	border-color:white;
+}
+/*cor do dropdown*/
+.navbar .navbar-nav .open .dropdown-menu>li>a, .navbar .navbar-nav .open .dropdown-menu {
+	background-color: #000;
+	color:#FFF;
+	border-color: transparent;
+}
+
+.divider{
+	border: 1px solid rgb(255,255,255);
+}
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 768px) { /* TABLET */
+	
+	.header{
+		display: flex;
+		
+		justify-content: flex-start;
+		padding: 15px 0px 15px 0px;
+
+	}
+	.search{
+		padding: 0;
+		height: 100px;
+		width: 100%;
+		background-color: transparent;
+
+		align-items: center;
+		display: flex;  
+		justify-content: flex-end;
+	}
+
+}
+
+@media (min-width: 992px) { /* COMPUTADOR */
+
+
+}
+
+@media print {
+	.noprint { display: none; }
+}
+
+

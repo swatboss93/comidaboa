@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Categoria Comida Boa</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/all.min.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/navbar.css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/shieldui-all.min.js"></script>
+
+  <script type="text/javascript">
+    if($.cookie("usuarioLogado") == null)
+      $.cookie("usuarioLogado","false");
+  </script>
+
+</head>
+<body>
+  <header class="row"> <!-- primeira row -->
+    <div class="container">
+      <div class="col-xs-12 col-sm-7 col-md-8 header">
+        <img src="images/logo.png" class="img-responsive" alt="Logo Comida Boa">
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-4 info-header">
+        <div class="barra-a">
+          <button type="submit" class="btn btn-default" onclick="aumentaLetra()">A+</button>
+          <button type="submit" class="btn btn-default" onclick="diminuiLetra()">A-</button>
+          <button type="submit" class="btn btn-default" onclick="contraste()" >Contraste</button>
+        </div>
+        <div id="infoUsuario" class="login-inicio">
+          <h4>Olá, faça o <a href="login.html">login</a> ou <a href="cadastrar-usuario.html">cadastre-se</a></h4>
+        </div>
+        <script type="text/javascript">
+          if($.cookie("infoUsuario").localeCompare("false") != 0)
+          {
+            var strJson = $.cookie("infoUsuario");
+            var objJ = JSON.parse(strJson);
+            $('#infoUsuario').html("<h4>Olá, "+objJ.nome+" <button class='btn btn-danger btn-sm' type='button' onclick='sair()'>Sair</button></h4>");
+          }
+        </script>
+        <div class="search"> <!-- inicio busca-->
+          <form class="form-inline">
+            <input type="text" class="form-control" id="busca" placeholder="Buscar receita...">
+          </form>
+        </div><!-- fim busca -->
+      </div> 
+    </div>
+  </header> <!-- fim primeira row -->
+
+  <div class="row">
+    <div class="container-fluid menu">
+      <div class="navbar-wrapper"> <!-- inicio menu -->
+        <div class="container">
+          <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+                  <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+                  <li><a href="categoria.html?categoria=aves">Aves</a></li>
+                  <li><a href="categoria.html?categoria=massas">Massas</a></li>
+                  <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+                  <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+                  <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+                  <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav> 
+        </div>
+      </div><!--fim menu-->
+    </div>
+  </div>
+
+  <!-- inicio conteúdo da página -->
+  <section>
+    <div class="container-fluid titulo-conteudo-back">
+      <div class="container titulo-conteudo">
+        <div class="col-md-12">
+          <header id='tituloCategoria'>
+          </header>
+          <button id="anterior" >&lsaquo; Anterior</button>
+          <span id="numeracao"></span>
+          <button id="proximo" >Próximo &rsaquo;</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container conteudo-categorias">
+      <article id="conteudoCategorias" >
+      </article>
+    </div>
+  </section>
+
+  <script type="text/javascript">
+    var cadastro = getUrlVars()["categoria"];
+    if(cadastro.localeCompare("bolosetortas") == 0){
+      $('#tituloCategoria').html("<h1>Bolos e tortas</h1>");
+
+    }else if(cadastro.localeCompare("carnes") == 0){
+      $('#tituloCategoria').html("<h1>Carnes</h1>");
+
+    }else if(cadastro.localeCompare("aves") == 0){
+      $('#tituloCategoria').html("<h1>Aves</h1>");
+      
+    }else if(cadastro.localeCompare("massas") == 0){
+      $('#tituloCategoria').html("<h1>Massas</h1>");
+      
+    }else if(cadastro.localeCompare("sopas") == 0){
+      $('#tituloCategoria').html("<h1>Sopas</h1>");
+      
+    }else if(cadastro.localeCompare("lanches") == 0){
+      $('#tituloCategoria').html("<h1>Lanches</h1>");
+      
+    }else if(cadastro.localeCompare("bebidas") == 0){
+      $('#tituloCategoria').html("<h1>Bebidas</h1>");
+    }
+
+    var dados = new Array();
+    
+    $.getJSON("categoria.php?categoria="+cadastro, function(result){
+      $.each(result, function(name, valor){
+
+        obj =[valor.imagem,valor.nome,valor.avaliacao,valor.qtd_avaliacao,valor.autor,valor.id];
+        dados.push(obj);
+        
+      });
+      paginar();
+      ajustarBotoes();
+    });
+
+  </script>
+  <!-- fim conteúdo da página -->
+  
+  <footer>
+    <div class="container-fluid rodape"> <!-- inicio rodape -->
+      <div class="container">
+        <div class="col-md-2 col-sm-3 col-xs-6">
+          <img src="images/logo.png" class="img-responsive" alt="Responsive image">
+        </div>
+        <div class="col-md-10 col-sm-9 col-xs-12">
+          <ul class="list-inline">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+            <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+            <li><a href="categoria.html?categoria=aves">Aves</a></li>
+            <li><a href="categoria.html?categoria=massas">Massas</a></li>
+            <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+            <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+            <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+            <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid rodape-autores"> <!-- inicio rodape -->
+      <div class="container">
+        <div class="col-md-12 rodape-autores">
+          <dl>
+            <dt>Institudo de Ciências Matemáticas e de Computação - Universidade de São Paulo</dt>
+            <dd>Disciplina de Sistemas Web e Hipermídia</dd>
+            <dd>Professora Renata Pontin de Mattos Fortes</dd>
+            <dd>Alunos: Eduardo Pereira Fressato NUSP: 9744010 e Wallison de Oliveira NUSP: 9745115</dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script type="text/javascript">
+
+    if($.cookie("usuarioLogado").localeCompare("true") == 0)
+    { 
+      var strJson = $.cookie("infoUsuario");
+      var objJ = JSON.parse(strJson);
+      $('#infoUsuario').html("<h4>Olá, "+objJ.nome+" <button class='btn btn-danger btn-sm' type='button' onclick='sair()'>Sair</button></h4>");
+      $('#autor').attr('value', objJ.nome);
+      $('#login').attr('value', objJ.login);
+    }else{
+          //$.cookie("usuarioTentouCadastrarRec", "true");
+          //window.location.href = "index.html";
+        }
+
+
+        var tamanhoPagina = 4;
+        var pagina = 0;
+
+
+        function paginar() {
+          $("#conteudoCategorias").html("");             
+          for (var i = pagina * tamanhoPagina; i < dados.length && i < (pagina + 1) *  tamanhoPagina; i++) {
+
+            var conteudo = '<a href="receita.html?id='+dados[i][5]+'"><div class="col-md-3 col-sm-6"><img class="img-circle center-block" src="images/'+dados[i][0]+'" alt="'+dados[i][0]+'" width="200" height="200"> <h2>'+dados[i][1]+'</h2><h5>Nota: '+dados[i][2].substring(0, 3)+' de 5</h5> <p>'+dados[i][3]+' pessoas avaliaram este item.</p> <p>Enviada por: '+dados[i][4]+'</p><a class="btn btn-default " href="receita.html?id='+dados[i][5]+'" role="button">Visualizar</a></a>';
+   //alert(dados[i]);
+   $("#conteudoCategorias").append(conteudo);                        
+ }
+
+ $('#numeracao').text('Página ' + (pagina + 1) + ' de ' + Math.ceil(dados.length / tamanhoPagina));
+}
+
+function ajustarBotoes() {
+  $('#proximo').prop('disabled', dados.length <= tamanhoPagina || pagina > dados.length / tamanhoPagina - 1);
+  $('#anterior').prop('disabled', dados.length <= tamanhoPagina || pagina == 0);
+}
+
+$(function() {
+  $('#proximo').click(function() {
+      //alert(dados.length);
+      if (pagina < dados.length / tamanhoPagina - 1) {
+        pagina++;
+        paginar();
+        ajustarBotoes();
+      }
+    });
+  $('#anterior').click(function() {
+    if (pagina > 0) {
+      pagina--;
+      paginar();
+      ajustarBotoes();
+    }
+  });
+    //paginar();
+    //ajustarBotoes();
+  });
+</script>
+</body>
+</html>

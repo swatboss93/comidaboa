@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cadastrar Receita Comida Boa</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/all.min.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/navbar.css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/scriptCadastrarReceita.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/shieldui-all.min.js"></script>
+
+  <script type="text/javascript">
+    if($.cookie("usuarioLogado") == null)
+      $.cookie("usuarioLogado","false");
+
+    if($.cookie("usuarioLogado").localeCompare("false") == 0)
+    {
+      $.cookie("usuarioTentouCadastrarRec", "true");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</head>
+<body>
+  <header class="row"> <!-- primeira row -->
+    <div class="container">
+      <div class="col-xs-12 col-sm-7 col-md-8 header">
+        <img src="images/logo.png" class="img-responsive" alt="Logo Comida Boa">
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-4 info-header">
+        <div class="barra-a">
+          <button type="submit" class="btn btn-default" onclick="aumentaLetra()">A+</button>
+          <button type="submit" class="btn btn-default" onclick="diminuiLetra()">A-</button>
+          <button type="submit" class="btn btn-default" onclick="contraste()" >Contraste</button>
+        </div>
+        <div id="infoUsuario" class="login-inicio">
+          <h4>Olá, faça o <a href="login.html">login</a> ou <a href="cadastrar-usuario.html">cadastre-se</a></h4>
+        </div>
+        
+        <div class="search"> <!-- inicio busca-->
+          <form class="form-inline">
+            <input type="text" class="form-control" id="busca" placeholder="Buscar receita...">
+          </form>
+        </div><!-- fim busca -->
+      </div> 
+    </div>
+  </header> <!-- fim primeira row -->
+
+  <div class="row">
+    <div class="container-fluid menu">
+      <div class="navbar-wrapper"> <!-- inicio menu -->
+        <div class="container">
+          <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+                  <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+                  <li><a href="categoria.html?categoria=aves">Aves</a></li>
+                  <li><a href="categoria.html?categoria=massas">Massas</a></li>
+                  <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+                  <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+                  <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+                  <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav> 
+        </div>
+      </div><!--fim menu-->
+    </div>
+  </div>
+
+  <!-- inicio conteúdo da página -->
+  <section>
+    <div class="container-fluid titulo-conteudo-back">
+      <div class="container titulo-conteudo">
+        <header class="col-md-12">
+          <h1>Cadastre sua receita aqui</h1>
+        </header>  
+      </div>   
+    </div>
+    <div class="container">
+      <div class="conteudo-conteudo">
+        <p>Todos os campos são de preenchimento obrigatório.</p>
+
+        <form id="formulario" method="post" enctype="multipart/form-data" action="upload.php">
+          <div class="form-group">
+            <label>Nome do autor</label>
+            <input id="autor" name="autor" class="form-control" type="text" placeholder="Nome do autor" disabled="true" >
+                <!-- inputs invisiveis 
+                <input id="autor2" name="autor" class="form-control" type="hidden">
+              -->
+              <input id="login" name="login" class="form-control" type="hidden">
+              <!-- fim -->
+            </div><div class="form-group">
+            <label>Nome da receita</label>
+            <input name="nomeReceita" type="text" class="form-control" maxlength="50" placeholder="Digite o nome da sua receita">
+          </div><div class="form-group">
+          <label>Ingredientes</label>
+          <!-- linha ingrediente -->
+          <div id="ings">
+            <div id="ing" class="form-inline"> 
+              <label>Quantidade</label>
+              <input name="quantidade[]" type="text" name="" class="form-control" maxlength="10" placeholder="Quantidade">
+              <label>Medida</label>
+              <select name="medida[]" class="form-control">
+                <option>Unidade(s)</option>
+                <option>Copo(s) (200 ml)</option>
+                <option>Copo(s) (300 ml)</option>
+                <option>Colheres de Sopa</option>
+                <option>Colheres de Café</option>
+                <option>Grama(s) (g)</option>
+                <option>Kilograma(s) (Kg)</option>
+                <option>Mililitro(s) (ml)</option>
+                <option>Litro(s) (L)</option>
+              </select>
+              <label>Nome</label>
+              <input name="nomeIng[]" type="text" class="form-control" maxlength="50" placeholder="Nome do ingrediente"> 
+              <!-- fim linha ingrediente -->
+            </div>
+          </div>
+          <br> <input type="button" value="Adicionar mais um ingrediente" id="addIng" class="btn btn-default"/>
+        </div>
+
+        <div class="form-group">
+          <label>Modo de preparo</label>
+          <textarea name="modoPreparo" class="form-control" maxlength="300" rows="3"></textarea>
+        </div>
+        <div id="cats">
+          <label for="ingredientes">Categoria</label>
+          <div id="cat">
+            <div class="form-group">
+              <select name="categoria[]" class="form-control">
+                <option>Bolos e tortas</option>
+                <option>Carnes</option>
+                <option>Aves</option>
+                <option>Massas</option>
+                <option>Sopas</option>
+                <option>Lanches</option>
+                <option>Bebidas</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <input type="button" value="Adicionar mais uma categoria" id="addCat" class="btn btn-default"/><br><br>
+        <div id="imgs">
+          <div class="form-group">
+            <label for="exampleInputFile">Imagens</label>
+            <div id="img">
+              <input name='arquivos[]' type="file" multiple>
+              <p class="help-block">Selecione a imagem no seu computador.</p>
+            </div>
+          </div>
+        </div>
+        <input type="button" value="Adicionar mais uma imagem" id="addImg" class="btn btn-default"/><br><br>
+        <input type="submit" value="Enviar receita" id="enviarReceita" class="btn btn-default btn-lg"/>
+      </form>
+    </div>
+  </div>
+</section>
+</div>
+
+
+<!-- fim conteúdo da página -->
+
+<footer>
+  <div class="container-fluid rodape"> <!-- inicio rodape -->
+    <div class="container">
+      <div class="col-md-2 col-sm-3 col-xs-6">
+        <img src="images/logo.png" class="img-responsive" alt="Responsive image">
+      </div>
+      <div class="col-md-10 col-sm-9 col-xs-12">
+        <ul class="list-inline">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+          <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+          <li><a href="categoria.html?categoria=aves">Aves</a></li>
+          <li><a href="categoria.html?categoria=massas">Massas</a></li>
+          <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+          <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+          <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+          <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid rodape-autores"> <!-- inicio rodape -->
+    <div class="container">
+      <div class="col-md-12 rodape-autores">
+        <dl>
+          <dt>Institudo de Ciências Matemáticas e de Computação - Universidade de São Paulo</dt>
+          <dd>Disciplina de Sistemas Web e Hipermídia</dd>
+          <dd>Professora Renata Pontin de Mattos Fortes</dd>
+          <dd>Alunos: Eduardo Pereira Fressato NUSP: 9744010 e Wallison de Oliveira NUSP: 9745115</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="text/javascript">
+  if($.cookie("usuarioLogado").localeCompare("true") == 0)
+  {
+    var strJson = $.cookie("infoUsuario");
+    var objJ = JSON.parse(strJson);
+    $('#infoUsuario').html("<h4>Olá, "+objJ.nome+" <button class='btn btn-danger btn-sm' type='button' onclick='sair()'>Sair</button></h4>");
+    $('#autor').attr('value', objJ.nome);
+    $('#login').attr('value', objJ.login);
+  }else{
+    $.cookie("usuarioTentouCadastrarRec", "true");
+    window.location.href = "login.html";
+  }
+</script>
+</body>
+</html>

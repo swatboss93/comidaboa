@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Receita Comida Boa</title>
+
+  <link rel="stylesheet" type="text/css" href="css/all.min.css" />
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="css/navbar.css" rel="stylesheet">
+
+  <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="js/scriptReceita.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <script type="text/javascript" src="js/shieldui-all.min.js"></script>
+
+  <script type="text/javascript">
+    if($.cookie("usuarioLogado") == null)
+      $.cookie("usuarioLogado","false");
+  </script>
+
+</head>
+<body>
+
+  <header class="row"> <!-- incio header -->
+    <div class="container">
+      <div class="col-xs-12 col-sm-7 col-md-8 header">
+        <img src="images/logo.png" class="img-responsive" alt="Logo Comida Boa">
+      </div>
+      <div class="col-xs-12 col-sm-5 col-md-4 info-header noprint">
+        <div class="barra-a">
+          <button type="submit" class="btn btn-default" onclick="aumentaLetra()">A+</button>
+          <button type="submit" class="btn btn-default" onclick="diminuiLetra()">A-</button>
+          <button type="submit" class="btn btn-default" onclick="contraste()" >Contraste</button>
+        </div>
+        <div id="infoUsuario" class="login-inicio noprint">
+          <h4>Olá, faça o <a href="login.html">login</a> ou <a href="cadastrar-usuario.html">cadastre-se</a></h4>
+        </div>
+        <div class="search noprint"> <!-- inicio busca-->
+          <form class="form-inline">
+            <input type="text" class="form-control" id="busca" placeholder="Buscar receita...">
+          </form>
+        </div><!-- fim busca -->
+      </div> 
+    </div>
+  </header> <!-- fim header -->
+
+  <div class="row noprint">
+    <div class="container-fluid menu">
+      <div class="navbar-wrapper"> 
+        <div class="container">
+          <nav class="navbar navbar-inverse navbar-static-top"> <!-- inicio menu -->
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+                  <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+                  <li><a href="categoria.html?categoria=aves">Aves</a></li>
+                  <li><a href="categoria.html?categoria=massas">Massas</a></li>
+                  <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+                  <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+                  <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+                  <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav> <!--fim menu-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- inicio conteúdo da página -->
+  <section itemscope itemtype="http://schema.org/Recipe"> 
+    <article>  
+      <div class="container-fluid titulo-conteudo-back">
+        <div class="container titulo-conteudo">
+          <div class="col-md-12">
+            <h1><span id='nome-receita' itemprop="name"></span></h1>
+            <h4>Nota <span id="avaliacao-receita" id='nome-receita' itemprop="aggregateRating"></span> de 5</h4>
+          </div>
+        </div>
+      </div>
+      <div class="container conteudo-categorias">
+        <div class="row ">
+         <div class="col-xs-12 col-sm-6 col-md-6 carrosel"> <!-- Carrosel -->
+          <div id="sliderhome">
+            <div id="meuSlider" data-interval="5000" class="carousel slide" data-ride="carousel">
+              <div id="imagens-receita" class="carousel-inner">
+              </div>
+            </div>
+          </div>
+        </div> <!-- fim Carrosel -->
+        <!-- inicio conteudo da receita -->
+        <div class="col-xs-12 col-sm-6 col-md-6 ingredientes-modopreparo">
+          <h3>Ingredientes</h3>
+          <div id="ingredientes-receita">
+          </div>
+          <h3>Modo de preparo</h3>
+          <span id="modopreparo-receita" itemprop="recipeInstructions"></span>
+
+          <h3>Categorias</h3>
+          <span id="categorias-receita" itemprop="recipeCategory"></span>
+
+          <br><br>
+          <p>Receita enviada por <span id="autor-receita" itemprop="author"></span></p>
+          <div id="exportar-receita" class="noprint">
+            <button onclick="exibirXML()"class="btn btn-default">Exportar XML</button>
+            <button onclick="exibirJSON()" class="btn btn-default">Exportar JSON</button>
+            <input class="noprint btn btn-default" type="button" name="print" value="Imprimir" onClick="javascript:window.print()" >
+          </div>
+          <code>
+            <div id="conteudo-exportar" class="noprint">
+            </div>
+          </code>
+        </div>
+      </div>
+    </article>   
+
+    <script type="text/javascript">
+      var cadastro = getUrlVars()["id"];
+      objetoReceita = new Object();
+
+
+      $.getJSON("receita.php?id="+cadastro, function(result){
+        $.each(result, function(name, valor){
+
+          $('#id_receita').attr('value', valor.id_receita);
+          objetoReceita.id_receita = valor.id_receita;
+
+          $('#nome-receita').html(valor.nome);
+          objetoReceita.nome = valor.nome;
+          $('#avaliacao-receita').html(valor.avaliacao.substring(0, 3));
+          objetoReceita.avaliacao = valor.avaliacao.substring(0, 3);
+          $('#modopreparo-receita').html('<p>'+valor.modopreparo+'</p>');
+          objetoReceita.modopreparo = valor.modopreparo;
+          $('#autor-receita').html(valor.autor);
+          objetoReceita.autor = valor.autor;
+
+          var arrayIngredientes = new Array();
+                         //ingredientes
+                         var res_ingre = valor.ingredientes.split("&");
+                         var res_ingres = '<ul>';
+                         for( i=0; i < res_ingre.length-1 ;i++)
+                         {
+                          res_ingres =res_ingres+'<li><span itemprop="recipeIngredient">'+res_ingre[i]+'</span></li>';
+                          arrayIngredientes.push(res_ingre[i]);
+                        }
+                        res_ingres=res_ingres+'</ul>';
+                        $('#ingredientes-receita').html(res_ingres);
+                        objetoReceita.ingredientes = arrayIngredientes;
+
+                        var arrayCategorias = new Array();
+                         //categorias
+                         var res_cat = valor.categorias.split("&");
+                         var res_cats = "";
+                         for( i=0; i < res_cat.length-1 ;i++)
+                         {
+                          if(i==0)
+                            res_cats =res_cats+res_cat[i];
+                          else
+                            res_cats =res_cats+', '+res_cat[i];
+
+                          arrayCategorias.push(res_cat[i]);
+                        }
+                        $('#categorias-receita').html(res_cats);
+                        objetoReceita.categorias = arrayCategorias;
+
+                        var arrayImagens = new Array();
+                        //imagens
+                        var res_img = valor.imagens.split("&");
+                        var res_imgs = "";
+                        for( i=0; i < res_img.length-1 ;i++)
+                        {
+                          if(i==0)
+                            res_imgs =res_imgs+'<div class="item active"><img itemprop="image" src="images/'+res_img[i]+'" alt="Slider 1" /></div>';
+                          else
+                            res_imgs =res_imgs+'<div class="item "><img itemprop="image" src="images/'+res_img[i]+'" alt="Slider 1" /></div>';
+
+                          arrayImagens.push(res_img[i]);
+                        }
+                        res_imgs=res_imgs+'<a class="left carousel-control" href="#meuSlider" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#meuSlider" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>';
+                        $('#imagens-receita').html(res_imgs);
+                        objetoReceita.imagens = arrayImagens;
+                      });
+      });
+
+    </script>
+
+
+    <!-- INICIO CONTEUDO RESTRITO -->
+    <div class="container">
+    <div class="receita-avaliacao-comentario noprint">
+      <div class="row">
+
+       <div id="conteudo-restrito" class="col-md-12 ">
+        <!-- INICIO FORM AVALIACAO -->
+        <article>
+          <form>
+            <h3>Avalie esta receita</h3>
+            <div class="form-group">
+              <select id="avaliacao" name="nova-avaliacao" class="form-control">
+                <option>5</option>
+                <option>4</option>
+                <option>3</option>
+                <option>2</option>
+                <option>1</option>
+              </select>
+            </div>
+            <div id="resposta-avaliacao" class="resposta-ajax"></div>
+            <input type="button" value="Enviar avaliação" id="enviar-avaliacao" onclick="realiza_avaliacao()" class="btn btn-default btn-lg"/>
+          </form>
+        </article>
+        <!-- INICIO FORM COMENTARIO -->
+        <article>
+          <form id="formulario">
+            <h3 class="receita-avaliacao-comentario">Faça seu comentário</h3>
+            <div class="form-group">
+              <label for"nome completo">Nome completo</label>
+              <input id="nome" name="nome" class="form-control" type="text" disabled="true" >
+              <input id="login" name="login" class="form-control" type="hidden">
+              <input id="id_receita" name="id_receita" class="form-control" type="hidden">
+            </div>
+            <div class="form-group">
+              <label>Comentário</label>
+              <textarea id="comentario" name="comentario" class="form-control" maxlength="300" rows="3"></textarea>
+            </div>
+            <div id="resposta-comentario" class="resposta-ajax"></div>
+            <input type="submit" value="Enviar comentário" id="enviar-comentario" class="btn btn-default btn-lg"/>
+          </form>
+        </article>
+      </div>
+    </div>
+    <!-- FIM CONTEUDO RESTRITO -->
+
+    <!-- INICIO COMENTARIOS -->
+    <div id="coments">
+      <h3>Comentários sobre essa receita</h3>
+      <div itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
+        <meta itemprop="interactionType" content="http://schema.org/CommentAction" />
+        <meta itemprop="userInteractionCount" content="5" />
+      </div>
+      <article id="coment">
+      </article>
+    </div>
+    <!-- FIM COMENTARIOS -->
+  </div>
+
+  <script type="text/javascript">
+
+    $.getJSON("comentarios.php?id="+cadastro, function(result){
+      $.each(result, function(name, valor){
+
+        $('#coment').append('<h5>'+valor.nome+'</h5><div class="conteudo-coment"><p>'+valor.comentario+'</p></div>');
+      });
+    });
+  </script> 
+
+</div>
+</section>
+<!-- fim conteúdo da página -->
+
+<footer class="noprint"> <!-- inicio rodape -->
+  <div class="container-fluid rodape"> 
+    <div class="container">
+      <div class="col-md-2 col-sm-3 col-xs-6">
+        <img src="images/logo.png" class="img-responsive" alt="Responsive image">
+      </div>
+      <div class="col-md-10 col-sm-9 col-xs-12">
+        <ul class="list-inline">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categoria.html?categoria=bolosetortas">Bolos e tortas</a></li>
+          <li><a href="categoria.html?categoria=carnes">Carnes</a></li>
+          <li><a href="categoria.html?categoria=aves">Aves</a></li>
+          <li><a href="categoria.html?categoria=massas">Massas</a></li>
+          <li><a href="categoria.html?categoria=sopas">Sopas</a></li>
+          <li><a href="categoria.html?categoria=lanches">Lanches</a></li>
+          <li><a href="categoria.html?categoria=bebidas">Bebidas</a></li>
+          <li><a class="btn btn-default link" href="cadastrar-receita.html">Cadastrar receita</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid rodape-autores">
+    <div class="container">
+      <div class="col-md-12 rodape-autores">
+        <dl>
+          <dt>Institudo de Ciências Matemáticas e de Computação - Universidade de São Paulo</dt>
+          <dd>Disciplina de Sistemas Web e Hipermídia</dd>
+          <dd>Professora Renata Pontin de Mattos Fortes</dd>
+          <dd>Alunos: Eduardo Pereira Fressato NUSP: 9744010 e Wallison de Oliveira NUSP: 9745115</dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</footer>  <!-- inicio rodape -->
+
+<script type="text/javascript">
+
+  if($.cookie("usuarioLogado").localeCompare("true") == 0)
+  { 
+    var strJson = $.cookie("infoUsuario");
+    var objJ = JSON.parse(strJson);
+    $('#infoUsuario').html("<h4>Olá, "+objJ.nome+" <button class='btn btn-danger btn-sm' type='button' onclick='sair()'>Sair</button></h4>");
+    $('#nome').attr('value', objJ.nome);
+    $('#login').attr('value', objJ.login);
+  }else{
+    $('#conteudo-restrito').html("");
+  }
+</script>
+</body>
+</html>
